@@ -9,13 +9,8 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-const client = require('./client');
-
-client.connect();
-
-client.query("INSERT INTO users (id, name, email, password) VALUES('90797978977086', 'bob', 'bob@bob', 'alkjdsfe');", (err, res) =>{
-  if (err) throw err;
-});
+const sendUser = require('./sendUser'); 
+const getUsers = require('./getUsers')
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -26,6 +21,43 @@ initializePassport(
 
 const users = []
 
+//CRUD FUNCTIONS
+async function pushUsers(){
+const tempUser = await getUsers();
+users.splice(0, users.length);
+tempUser.forEach(user => users.push(user));
+//console.log(users);
+}
+pushUsers();
+
+async function addUser(id, name, email, password){
+  await sendUser(id, name, email, password);
+    const tempUser = await getUsers();
+    users.splice(0, users.length)
+  tempUser.forEach(user => users.push(user));  
+  console.log(users);
+}
+// prevents repeat email from being added
+function doesEmailExist(email){
+let check = false;
+users.forEach(user => {
+console.log(user.email);
+if (user.email === email){
+    check = true;
+}
+})
+    return check;
+}
+
+//test function 
+/*
+async function getUsers2(){
+await pushUsers();
+console.log(doesEmailExist('bob@bob.com'));
+}
+getUsers2();*/
+//end test function
+app.use(express.static(__dirname + '/public'));
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
@@ -53,21 +85,20 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
-  res.render('register.ejs')
+  res.render('register.ejs', { message: ''})
 })
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
+   if(!doesEmailExist(req.body.email)){
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    users.push({
-      id: Date.now().toString(),
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword
-    })
+    await addUser(Date.now().toString(),req.body.name, req.body.email, hashedPassword);
     res.redirect('/login')
+  }else{
+    res.render('register.ejs', { message: 'Email in use'})
+  }
   } catch {
-    res.redirect('/register')
+    res.render('/register', { message: 'An Error Occured'})
   }
 })
 

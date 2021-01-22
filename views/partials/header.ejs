@@ -1,0 +1,26 @@
+<img src ="clearbackgroundlogo.png"height="50px" width="50px"/>
+<nav>
+<h2><%= name %></h2>
+<button id='help'>?</button>
+    <script>
+        document.getElementById('help').addEventListener('click', function(){
+            if (document.getElementById('navButtons').style.display == 'none'){
+             document.getElementById('navButtons').style.display = 'grid';
+            } else{
+              document.getElementById('navButtons').style.display = 'none';  
+            }
+        }, false);
+
+    </script>
+<div id=navButtons>
+<form action='/' method="GET">
+    <button type='submit'>Map</button>
+</form>
+<form action='/profile' method="GET">
+<button type='submit'>Profile</button>
+</form>
+<form action="/logout?_method=DELETE" method="POST">
+<button type="submit">Log Out</button>
+</form>
+</div>
+</nav>

@@ -113,6 +113,10 @@ app.get('/', checkAuthenticated, (req, res) => {
   res.render('index.ejs', { name: req.user.name })
 })
 
+app.get('/profile', checkAuthenticated, (req, res) =>{
+  res.render('profile.ejs', {name: req.user.name, profilePic: '/clearbackgroundlogo.png'})
+}) 
+
 app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login.ejs')
 })

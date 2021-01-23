@@ -1,11 +1,13 @@
 <html lang="en">
 <head>
-<%- include('./partials/head'); %>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+<%- include('./partials/head2'); %>
 </head>
 <body>
-<h1>Hi <%= name %></h1>
-<form action="/logout?_method=DELETE" method="POST">
-  <button type="submit">Log Out</button>
-</form>
+<header>
+<%- include('./partials/header'); %>    
+</header>
+<%- include('./partials/map'); %>
 </body>
 </html>

@@ -3,6 +3,10 @@
 <%- include('./partials/head'); %>
 </head>
 <body>
+<header>
+    <%- include('./partials/LRheader'); %>
+</header>
+<div class='content'>
 <h1>Register</h1>
 <form action="/register" method="POST">
   <div>
@@ -22,6 +26,9 @@
 <% if (message) { %>
 <p id='errMessage'><%= message %></p>
 <% } %>
-<a href="/login">Login</a>
+<div id="bottomButton">
+<a href="/login"><button>Login</button></a>
+</div>
+</div>
 </body>
 </html>

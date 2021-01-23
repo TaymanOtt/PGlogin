@@ -1,8 +1,79 @@
 *{
 padding: 0;
 margin: 0;
+background: black;
+color: white;
+text-align: center;
 }
 #errMessage{
 color: red;
+font-size: 3vw;
+}
+header{
+position: fixed;
+font-size: 2vw;
+width: 100vw;
+}
+header img{
+height: 170px;
+width: 170px;
+}
+.content{
+font-size: 4.5vw;
+position: relative;
+top: 25vh;
+margin: auto;
+}
+.content input{
+margin: 2vw;
+padding: 10px;
 font-size: 4vw;
+font-family: monospace;
+text-align: left;
+color: lightgreen;
+}
+.content button {
+    padding: 1vw;
+    font-size: 7vw;
+    margin: 2vw;
+    border-radius: 1vw;
+    font-weight: bold;
+}
+.content button:hover {
+background: grey;
+}
+#bottomButton{
+position:relative;
+top: 13vw;
+}
+@media (min-width: 1900px){
+header img{
+height: 250px;
+width: 250px;
+}
+.content{
+  font-size: 3vw;
+}
+.content button{
+  font-size: 3vw;
+}
+.content input{
+  margin: 1vw;
+}
+}
+@media (min-width: 1000px){
+header img{
+  height: 200px;
+  width: 200px;
+}
+.content{
+  font-size: 3vw;
+}
+.content button{
+  font-size: 3vw;
+}
+.content input{
+  margin: 1vw;
+}
+
 }

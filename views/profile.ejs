@@ -1,0 +1,23 @@
+<html>
+<head>
+    <%- include('./partials/head2');%>
+</head>
+<body>
+  <header>
+    <%- include('./partials/header');%>
+  </header>
+  <div class='content'>
+    <h1><%= name %></h1>
+    <% if (profilePic){ %>
+    <img src='<%- profilePic %>' width='100px' height='100px'>
+   <% }else { %>
+   <img src="" width="78px" height="89px"/>
+   <% } %>
+
+  <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<label for="imgfile">File input</label>
+<input type="file" name="imgfile" />
+  </form>
+  </div>
+</body>
+</html>    

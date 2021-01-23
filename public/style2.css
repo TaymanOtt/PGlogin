@@ -1,0 +1,80 @@
+*{
+  color: white;
+  text-align: center;
+}
+body{
+background: black;
+}
+#map{
+  width: 100vw;
+  position: relative;
+  top: 130px;
+  left: 3vw;
+  height: 110vh;
+}
+.content{
+ position: relative;
+ top: 200px;
+}
+header{
+position: fixed;
+z-index: 99;
+width: 100%;
+display: grid;
+grid-template-columns: auto auto;
+}
+header img{
+  margin: auto;
+  margin-left: 1vw;
+  height: 120px;
+  width: 120px;
+}
+nav {
+position: relative;
+display: grid;
+grid-template-columns: auto auto;
+}
+nav h2{
+position: fixed;
+right: 150px;
+}
+#help{
+z-index: 101;
+position: fixed;
+top: 20px;
+right: 50px;
+background: white;
+font-size: 70px;
+color: black;
+border-radius: 10px;
+}
+#help:hover{
+background: grey;
+color: white;
+}
+#navButtons{
+padding-top:20px;
+z-index: 100;
+display: grid;
+background: grey;
+width: 10vw;
+position: fixed;
+top: 70px;
+right: 50px;
+}
+#navButtons button{
+  background: black;
+  color: white;
+  font-size: 3vw;
+}
+#navButtons button:hover{
+  background: grey;
+}
+@media (min-width: 1100px){
+    #help{
+        font-size:5vw;
+    }
+    #navButtons{
+        top: 140px;
+    }
+}

@@ -48,7 +48,46 @@ if (user.email === email){
 })
     return check;
 }
+function isEmail(email){
+let hasCharacters = false;
+let hasBadChars = false;
+const badChars = ['[',']', '=', '^', '$', '?', '!', '\\', '"', "'", ';',
+ ':', '(', ')', '/', '*', '|', '#', '%', '>', '<', ',', ' ']
+for(let i = 0; i < badChars.length; i++){
+ if(email.includes(badChars[i]) || email.length < 1){
+   hasBadChars = true;
+   break;
+ }
+}
+  if(hasBadChars){
+   return false;
+  }
+if(!email.includes('@') && !email.includes('.')){
+  return false;
+} else {
+  hasCharacters = true;
+}
+if (email.length > 7 && hasCharacters){
+ return true;
+}
+return false;
+}
 
+function isValid(string){
+  if (string.length > 20 || string.length < 1){
+   return false;
+  }
+    const badChars =['[',']', '=', ' ', '^', '$', '?', '!', '\\', '"', "'",
+ ':', '(', ')', '/', '*', '|', '#', '%', '>', '<', ','];
+  let hasBadChars = false;
+  for (let i = 0; i < badChars.length; i++){
+   if (string.includes(badChars[i])){
+     hasBadChars = true;
+     break;
+   }
+  }
+    return !hasBadChars;
+}
 //test function 
 /*
 async function getUsers2(){
@@ -90,15 +129,24 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
-   if(!doesEmailExist(req.body.email)){
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    await addUser(Date.now().toString(),req.body.name, req.body.email, hashedPassword);
-    res.redirect('/login')
-  }else{
-    res.render('register.ejs', { message: 'Email in use'})
-  }
-  } catch {
-    res.render('/register', { message: 'An Error Occured'})
+    //if(isValid(req.body.username) && isValid(req.body.password)){
+     if(!doesEmailExist(req.body.email) && isEmail(req.body.email)){
+      const hashedPassword = await bcrypt.hash(req.body.password, 10)
+      await addUser(Date.now().toString(),req.body.name, req.body.email, hashedPassword);
+      res.redirect('/login')
+     }else if(doesEmailExist(req.body.email)){
+      res.render('register.ejs', { message: 'Email in use'})
+    }
+      else{
+        res.render('register.ejs', { message: 'Please enter a valid email'})
+      }
+   /* }
+      else{
+        res.render('register.ejs', { message: 'No special characters.'})
+      }*/
+  } catch(err) {
+    console.log('an error occured: ' + err)
+    res.render('register.ejs', { message: 'An Error Occured'})
   }
 })
 

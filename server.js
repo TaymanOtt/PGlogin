@@ -129,7 +129,7 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
-    //if(isValid(req.body.username) && isValid(req.body.password)){
+    if(isValid(req.body.name) && isValid(req.body.password)){
      if(!doesEmailExist(req.body.email) && isEmail(req.body.email)){
       const hashedPassword = await bcrypt.hash(req.body.password, 10)
       await addUser(Date.now().toString(),req.body.name, req.body.email, hashedPassword);
@@ -140,10 +140,10 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
       else{
         res.render('register.ejs', { message: 'Please enter a valid email'})
       }
-   /* }
+    }
       else{
         res.render('register.ejs', { message: 'No special characters.'})
-      }*/
+      }
   } catch(err) {
     console.log('an error occured: ' + err)
     res.render('register.ejs', { message: 'An Error Occured'})

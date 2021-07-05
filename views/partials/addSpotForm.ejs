@@ -1,0 +1,20 @@
+<div id="spotForm">
+	<form action="/addSpot" method="POST">
+		<h1>Add Spot</h1>
+		<div>
+			<label for="spotName">Spot Name</label>
+			<input type="spotName" id="spotName" name="spotName" required>
+		</div>
+		<div>
+			<label for="lngLat">Longitude/Latitude</label>
+			<input type="lngLat" id="lngLat" name="lngLat" required>
+		</div>
+		<button type="submit">Add Spot</button>
+		<button id="closeSpotForm">Close</button>
+		<script>
+			document.getElementById("closeSpotForm").addEventListener("click", function(){
+				document.getElementById("spotForm").style.display = "none";
+			}, false);
+		</script>
+	</form>
+</div>

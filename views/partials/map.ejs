@@ -1,28 +1,35 @@
  <div id='map'                                                                 
         style='width: 91vw; height: 80vh; border-radius: 20px;'>                  
   <div>                                                                            
+	  <div id="info"></div>
         <script>                                                                  
-            //adds map                                                            
+           //adds map                                                            
+		let MySpots = <%- JSON.stringify(spots)%>
+		console.log(MySpots)
         mapboxgl.accessToken = 'pk.eyJ1IjoidGF5bWFub3R0IiwiYSI6ImNrZGRhZDk5MjF4azcyeWx2MW5nejM3eG8ifQ.LFKvbQSDAD2Dw5tDuKNulg';
+
         var map = new mapboxgl.Map({                                        
             container: 'map',                                               
             style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location   
             center: [-89.383, 43.074], // starting position [lng, lat]            
              zoom: 9 // starting zoom                                        
             });                                                             
-                                                                            
-                  /*  console.log(parks);                                     
-                    //adds markers                                          
-                    parks.features.forEach(function(marker){                
-                      var el = document.createElement('div');               
-                      el.className = 'parks';                               
-                      new mapboxgl.Marker(el)                               
-                      .setLngLat(marker.geometry.coordinates)               
-                      .setPopup(new mapboxgl.Popup({offset:25})             
-                     .setHTML('<h3>' + marker.properties.title + '</h3><p>' 
-                      + marker.properties.description + '</p>'))            
-                      .addTo(map);                                          
-                    }); */                                                    
-        </script>                                                           
+	MySpots.forEach(function(marker){
+		var SpotOnMap = document.createElement('div');
+		SpotOnMap.className = 'spots';
+		new mapboxgl.Marker(SpotOnMap)
+			.setLngLat([marker.longitude, marker.latitude])
+	.setPopup(new mapboxgl.Popup({offset:25})
+	.setHTML('<h3>' + marker.username + '</h3><p>' 
+                        + marker.spotname + '</p>'))
+                          .addTo(map);
+	});
+
+	map.on('click', function(e) { //original was 'mousemove'
+		document.getElementById("lngLat").value = JSON.stringify(e.lngLat.wrap());	
+		
+			console.log(JSON.stringify(e.lngLat.wrap()));
+	});
+       </script>                                                           
         </div>                                                              
     </div>                      

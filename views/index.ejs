@@ -1,13 +1,20 @@
 <html lang="en">
 <head>
-<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-<%- include('./partials/head2'); %>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+  <%- include('./partials/head2'); %>
 </head>
 <body>
 <header>
 <%- include('./partials/header'); %>    
 </header>
+<%- include('./partials/addSpotForm'); %>
+<button id="addSpotButton">Add Spot</button>
+<script>
+document.getElementById("addSpotButton").addEventListener("click", function(){
+document.getElementById("spotForm").style.display = "grid";
+}, false);
+</script>
 <%- include('./partials/map'); %>
 </body>
 </html>

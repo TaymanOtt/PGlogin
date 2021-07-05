@@ -11,6 +11,8 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const sendUser = require('./sendUser'); 
 const getUsers = require('./getUsers')
+const addSpot = require('./addSpot');
+const getSpots = require('./getSpots');
 
 const initializePassport = require('./passport-config')
 initializePassport(
@@ -28,7 +30,16 @@ users.splice(0, users.length);
 tempUser.forEach(user => users.push(user));
 //console.log(users);
 }
+
 pushUsers();
+
+const grabbedSpots = []
+
+async function retrieveSpots(){
+const tempSpots = await getSpots();
+grabbedSpots.splice(0, grabbedSpots.length);
+tempSpots.forEach(spot => grabbedSpots.push(spot));
+}
 
 async function addUser(id, name, email, password){
   await sendUser(id, name, email, password);
@@ -95,6 +106,14 @@ await pushUsers();
 console.log(doesEmailExist('bob@bob.com'));
 }
 getUsers2();*/
+/* add fictional spot to database
+async function testAdd(){
+	const trash = await addSpot('bob', 'some place', 89.99876, 89.77654);
+	const itworked = await getSpots();
+	console.log(itworked);
+} 
+testAdd();
+*/
 //end test function
 app.use(express.static(__dirname + '/public'));
 app.set('view-engine', 'ejs')
@@ -110,7 +129,8 @@ app.use(passport.session())
 app.use(methodOverride('_method'))
 
 app.get('/', checkAuthenticated, (req, res) => {
-  res.render('index.ejs', { name: req.user.name })
+  res.render('index.ejs', { name: req.user.name, spots: grabbedSpots })
+	
 })
 
 app.get('/profile', checkAuthenticated, (req, res) =>{
@@ -159,6 +179,18 @@ app.delete('/logout', (req, res) => {
   res.redirect('/login')
 })
 
+app.post("/addSpot", checkAuthenticated, async (req, res) =>{
+	try{
+	let coordinates = JSON.parse(req.body.lngLat);
+	const locationTrash = await addSpot(req.user.name, req.body.spotName, coordinates.lng, coordinates.lat);
+		let spotTrash = await retrieveSpots();
+	res.render('index.ejs', {name: req.user.name, spots: grabbedSpots});
+	}catch(err){
+	console.log(`an error occcured: ${err}`);
+	res.render('index.ejs', {name: req.user.name});
+	}
+})
+
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next()
@@ -174,4 +206,8 @@ function checkNotAuthenticated(req, res, next) {
   next()
 }
 
-app.listen(3000)
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);

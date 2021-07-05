@@ -1,0 +1,4 @@
+{"lng":-89.51174603271494,"lat":42.86398286773965}
+
+let coordinates = JSON.parse(req.body.lngLat)
+coordinates.lng coordinates.lat

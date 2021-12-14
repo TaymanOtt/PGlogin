@@ -1,4 +1,52 @@
 <img src ="clearbackgroundlogo.png"height="50px" width="50px"/>
+<div id="searchBar">
+<form action="/search" autocomplete="off" method="POST">
+	<input autocomplete="off" name="hidden" type="text" style="display:none;">
+	<input type="search" id="search" name="search"> 
+	<button type="submit">X</button>
+	<div id="results"></div>
+<script>
+	let myInputField = document.getElementById("search");
+	let users = <%- JSON.stringify(users)%>
+	let results = document.getElementById("results");
+	let suggestions = [];
+
+	myInputField.addEventListener('input', () => {
+
+		users.forEach(function(user) {
+			
+			if (user.name.includes(myInputField.value) && !(suggestions.includes(user))){
+				let div = document.createElement('div');
+				div.innerText = user.name;
+				div.id = user.id;
+				div.className = "suggestions"
+				results.append(div);	
+				suggestions.push(user);
+				console.log(suggestions)
+			}
+			else if (myInputField.value == ''){
+				suggestions = [];
+				while (results.firstChild){
+					results.removeChild(results.firstChild);
+				}
+			}
+			// *|| myInputField.value == ''* was removed from if statement
+			else if (!(user.name.includes(myInputField.value))){
+				//results.remove(document.getElementById(user.id));
+				document.getElementById(user.id).remove();
+				let index = suggestions.indexOf(user);
+				if (index > -1){
+					suggestions.splice(index, 1);
+					console.log(suggestions)
+				}
+			}
+			
+		})
+
+}, false);
+</script>
+</form>
+</div>
 <nav>
 <h2><%= name %></h2>
 <button id='help'>?</button>

@@ -35,8 +35,8 @@ pushUsers();
 
 const grabbedSpots = []
 
-async function retrieveSpots(){
-const tempSpots = await getSpots();
+async function retrieveSpots(username){
+const tempSpots = await getSpots(username);
 grabbedSpots.splice(0, grabbedSpots.length);
 tempSpots.forEach(spot => grabbedSpots.push(spot));
 }
@@ -128,8 +128,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 
-app.get('/', checkAuthenticated, (req, res) => {
-  res.render('index.ejs', { name: req.user.name, spots: grabbedSpots })
+app.get('/', checkAuthenticated, async (req, res) => {
+  res.render('index.ejs', { name: req.user.name, spots: grabbedSpots, users: users })
 	
 })
 
@@ -183,7 +183,7 @@ app.post("/addSpot", checkAuthenticated, async (req, res) =>{
 	try{
 	let coordinates = JSON.parse(req.body.lngLat);
 	const locationTrash = await addSpot(req.user.name, req.body.spotName, coordinates.lng, coordinates.lat);
-		let spotTrash = await retrieveSpots();
+		let spotTrash = await retrieveSpots(req.user.name);
 	res.render('index.ejs', {name: req.user.name, spots: grabbedSpots});
 	}catch(err){
 	console.log(`an error occcured: ${err}`);

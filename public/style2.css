@@ -105,6 +105,11 @@ color: black;
 #spotForm button{
 background: black;
 }
+#searchBar input{
+	text-align: left;
+	font-family:monospace;
+	color: black;
+}
 #navButtons{
 padding-top:20px;
 z-index: 100;

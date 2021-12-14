@@ -6,10 +6,11 @@ const pool = new Pool({
 	host: "localhost",
 	port: "5432"
 });
-	async function getSpots(){
+	async function getSpots(username){
 	try{
-		const response = await pool.query("SELECT * FROM spots;")
+		const response = await pool.query(`SELECT * FROM spots WHERE userName='${username}';`)
 		return response.rows;
+		console.log(response.rows);
 	}	
 	catch(ex){
 		console.log(`Something went wrong ${ex}`);	

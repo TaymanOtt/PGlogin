@@ -137,6 +137,11 @@ app.get('/profile', checkAuthenticated, (req, res) =>{
   res.render('profile.ejs', {name: req.user.name, profilePic: '/clearbackgroundlogo.png'})
 }) 
 
+//create a post request that sends a username then redirects to the respective profile page
+/*app.post('/profile', checkAuthenticated, (req,res) =>{
+  res.render(MAKE PAGE FOR OTHER NON-CURRENT USER PROFILES
+})*/
+
 app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login.ejs')
 })

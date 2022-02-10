@@ -1,1 +1,9 @@
 follow user functionality
+
+try to send a post request with the requested profile's username then redirect to correct profile.
+
+create page for profiles that are not the logged in user
+
+make searchbar post requests for profiles
+
+create page and post requests for search results

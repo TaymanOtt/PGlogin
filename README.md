@@ -1,0 +1,1 @@
+This Project is a login system I am developing. It uses and Express backend that is connected to Postgres to store login data. The goal is to start with something primitive for the login system; so I may test attacks on it to then learn how to fortify logins.
